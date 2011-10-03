@@ -4,7 +4,7 @@ from select import select
 
 from fabric.auth import get_password, set_password
 from fabric.network import prompt_for_password
-from fabric.state import env, output, win32
+from fabric.state import env, output, win32, io_sleep
 
 if win32:
     import msvcrt
@@ -112,7 +112,7 @@ def input_loop(chan, using_pty):
         if win32:
             have_char = msvcrt.kbhit()
         else:
-            r, w, x = select([sys.stdin], [], [], 0.0)
+            r, w, x = select([sys.stdin], [], [], io_sleep)
             have_char = (r and r[0] == sys.stdin)
         if have_char:
             # Send all local stdin to remote end's stdin
