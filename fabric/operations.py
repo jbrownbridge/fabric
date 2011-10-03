@@ -22,7 +22,7 @@ from fabric.context_managers import char_buffered, hide, show, stringify_env_var
 from fabric.io import output_loop, input_loop
 from fabric.network import connections, default_channel, needs_host
 from fabric.thread_handling import ThreadHandler
-from fabric.state import env, output, win32
+from fabric.state import env, output, win32, io_sleep
 from fabric.utils import abort, indent, fastprint, warn
 
 # For terminal size logic below
@@ -586,6 +586,7 @@ def _execute(channel, command, pty=True, combine_stderr=True,
                     e = worker.exception
                     if e:
                         raise e[0], e[1], e[2]
+                time.sleep(io_sleep)
 
         # Obtain exit code of remote program now that we're done.
         status = channel.recv_exit_status()
