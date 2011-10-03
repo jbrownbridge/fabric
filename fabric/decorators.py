@@ -26,7 +26,10 @@ def task(*args, **kwargs):
     def __task(__func):
         # set the context
         def dec(*args, **kwargs):
-            with settings(ctx=ctx):
+            if len(ctx) > 0:
+                with settings(ctx=ctx):
+                    return __func(*args, **kwargs)
+            else:
                 return __func(*args, **kwargs)
 
         dec.__ctx__ = ctx
