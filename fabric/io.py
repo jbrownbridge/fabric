@@ -110,7 +110,7 @@ def output_loop(chan, which, capture):
 def input_loop(chan, using_pty):
     while not chan.exit_status_ready():
         if win32:
-            have_char = msvcrt.kbhit()
+            have_char = msvcrt.getch()
         else:
             r, w, x = select([sys.stdin], [], [], io_sleep)
             have_char = (r and r[0] == sys.stdin)
